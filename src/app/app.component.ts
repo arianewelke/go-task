@@ -10,6 +10,4 @@ import { TaskCommentsModalComponent } from "./components/task-comments-modal/tas
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'projeto-go-task';
-}
+export class AppComponent {}
