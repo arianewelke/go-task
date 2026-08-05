@@ -3,7 +3,7 @@ import { IComment } from "./comments.interface";
 
 export interface ITask {
   id: string;
-  title: string;
+  name: string;
   description: string;
   comments: IComment[];
   status:   TaskStatus;
