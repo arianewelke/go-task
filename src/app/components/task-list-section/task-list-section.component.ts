@@ -9,10 +9,11 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { ITask } from '../../interfaces/task.interface';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-list-section',
-  imports: [TaskCardComponent, CdkDropList, CdkDrag],
+  imports: [TaskCardComponent, CdkDropList, CdkDrag, AsyncPipe],
   templateUrl: './task-list-section.component.html',
   styleUrl: './task-list-section.component.css'
 })
@@ -21,7 +22,7 @@ export class TaskListSectionComponent {
   doingTasks: ITask[] = [];
   doneTasks: ITask[] = [];
 
-  private readonly _taskService = inject(TaskService);
+  readonly _taskService = inject(TaskService);
 
   ngOnInit() {
     this._taskService.todoTasks.subscribe(todoList => {
