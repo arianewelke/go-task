@@ -10,6 +10,8 @@ import {
 } from '@angular/cdk/drag-drop';
 import { ITask } from '../../interfaces/task.interface';
 import { AsyncPipe } from '@angular/common';
+import { TaskStatus } from '../../types/task-status';
+import { TaskStatusEnum } from '../../enums/task-status.enum';
 
 @Component({
   selector: 'app-task-list-section',
@@ -18,25 +20,37 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './task-list-section.component.css'
 })
 export class TaskListSectionComponent {
-  todoTasks: ITask[] = [];
-  doingTasks: ITask[] = [];
-  doneTasks: ITask[] = [];
-
   readonly _taskService = inject(TaskService);
 
-  ngOnInit() {
-    this._taskService.todoTasks.subscribe(todoList => {
-      this.todoTasks = todoList;
-    });
-    this._taskService.doingTasks.subscribe(doingList => {
-      this.doingTasks = doingList;
-    });
-    this._taskService.doneTasks.subscribe(doneList => {
-      this.doneTasks = doneList;
-    });
+  onCardDrop(event: CdkDragDrop<ITask[]>) {
+    this.moveCardToColumn(event);
+
+    const taskId = event.item.data.id;
+    const taskCurrentStatus = event.item.data.status;
+    const droppedCollun = event.container.id;
+
+    this.updateTaskStatus(taskId, taskCurrentStatus, droppedCollun);
   }
 
-  drop(event: CdkDragDrop<ITask[]>) {
+  private updateTaskStatus(taskId: string, taskCurrentStatus: TaskStatus, droppedCollun: string) {
+    let taskNextStatus: TaskStatus;
+
+    switch (droppedCollun) {
+      case 'to-do-column':
+        taskNextStatus = TaskStatusEnum.TODO;
+        break;
+      case 'doing-column':
+        taskNextStatus = TaskStatusEnum.DOING;
+        break;
+      case 'done-column':
+        taskNextStatus = TaskStatusEnum.DONE;
+        break;
+      default:
+        throw Error('Coluno não identificada.');
+    }
+  }
+
+  private moveCardToColumn(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {

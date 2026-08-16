@@ -5,11 +5,12 @@
 <div class="p-3 mb-6 flex overflow-x-auto scrollbar-hidden">
   <!-- Coluna A Fazer -->
   <div class="flex-1 py-3 px-6 min-w-60 flex flex-col gap-6"
+  id="to-do-column"
   cdkDropList
   #todoListCdkDropList="cdkDropList"
   [cdkDropListData]="todoTasks"
   [cdkDropListConnectedTo]="[doingListCdkDropList, doneListCdkDropList]"
-  (cdkDropListDropped)="drop($event)"
+  (cdkDropListDropped)="onCardDrop($event)"
   >
     <div class="py-2 border-b border-[#D1D5DB] flex items-center gap-1">
       <h1 class="font-bold">A Fazer</h1>
@@ -17,18 +18,19 @@
     </div>
     <div class="flex flex-col gap-4">
       @for(todoTask of todoTasks; track todoTask.id) {
-        <app-task-card cdkDrag />
+        <app-task-card cdkDrag [cdkDragData]="todoTask"/>
       }
     </div>
   </div>
   <!-- Coluna Em Progresso -->
   <div
   class="flex-1 py-3 px-6 min-w-60 flex flex-col gap-6"
+  id="doing-column"
   cdkDropList
   #doingListCdkDropList="cdkDropList"
   [cdkDropListData]="doingTasks"
   [cdkDropListConnectedTo]="[todoListCdkDropList, doneListCdkDropList]"
-  (cdkDropListDropped)="drop($event)"
+  (cdkDropListDropped)="onCardDrop($event)"
   >
     <div class="py-2 border-b border-[#D1D5DB] flex items-center gap-1">
       <h1 class="font-bold">Em Progresso</h1>
@@ -36,18 +38,19 @@
     </div>
     <div class="flex flex-col gap-4">
     @for(doingTask of doingTasks; track doingTask.id) {
-      <app-task-card cdkDrag />
+      <app-task-card cdkDrag [cdkDragData]="doingTask"/>
     }
     </div>
   </div>
   <!-- Coluna Concluída -->
   <div
   class="flex-1 py-3 px-6 min-w-60 flex flex-col gap-6"
+  id="done-column"
   cdkDropList
   #doneListCdkDropList="cdkDropList"
   [cdkDropListData]="doneTasks"
   [cdkDropListConnectedTo]="[todoListCdkDropList, doingListCdkDropList]"
-  (cdkDropListDropped)="drop($event)"
+  (cdkDropListDropped)="onCardDrop($event)"
   >
     <div class="py-2 border-b border-[#D1D5DB] flex items-center gap-1">
       <h1 class="font-bold">Concluída</h1>
@@ -55,7 +58,7 @@
     </div>
     <div class="flex flex-col gap-4">
     @for(doneTask of doneTasks; track doneTask.id) {
-      <app-task-card cdkDrag />
+      <app-task-card cdkDrag [cdkDragData]="doneTask"/>
     }
     </div>
   </div>
