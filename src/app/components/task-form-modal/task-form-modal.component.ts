@@ -1,14 +1,19 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { Component, inject } from '@angular/core';
 import { ITaskFormModalData } from '../../interfaces/task-form-modal-data.interface';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ITaskFormControls } from '../../interfaces/task-form-controls.interface';
 
 @Component({
   selector: 'app-task-form-modal',
   imports: [ReactiveFormsModule],
   templateUrl: './task-form-modal.component.html',
-  styleUrl: './task-form-modal.component.css'
+  styleUrl: './task-form-modal.component.css',
 })
 export class TaskFormModalComponent {
   readonly _data: ITaskFormModalData = inject(DIALOG_DATA);
