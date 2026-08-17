@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { TaskCardComponent } from "../task-card/task-card.component";
+import { TaskCardComponent } from '../task-card/task-card.component';
 import { TaskService } from '../../services/task.service';
 import {
   CdkDrag,
@@ -17,7 +17,7 @@ import { TaskStatusEnum } from '../../enums/task-status.enum';
   selector: 'app-task-list-section',
   imports: [TaskCardComponent, CdkDropList, CdkDrag, AsyncPipe, JsonPipe],
   templateUrl: './task-list-section.component.html',
-  styleUrl: './task-list-section.component.css'
+  styleUrl: './task-list-section.component.css',
 })
 export class TaskListSectionComponent {
   readonly _taskService = inject(TaskService);
@@ -32,7 +32,11 @@ export class TaskListSectionComponent {
     this.updateTaskStatus(taskId, taskCurrentStatus, droppedCollun);
   }
 
-  private updateTaskStatus(taskId: string, taskCurrentStatus: TaskStatus, droppedCollun: string) {
+  private updateTaskStatus(
+    taskId: string,
+    taskCurrentStatus: TaskStatus,
+    droppedCollun: string,
+  ) {
     let taskNextStatus: TaskStatus;
 
     switch (droppedCollun) {
@@ -52,13 +56,17 @@ export class TaskListSectionComponent {
     this._taskService.updateTaskStatus(
       taskId,
       taskCurrentStatus,
-      taskNextStatus
+      taskNextStatus,
     );
   }
 
   private moveCardToColumn(event: CdkDragDrop<ITask[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
     } else {
       transferArrayItem(
         event.previousContainer.data,
