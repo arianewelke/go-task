@@ -66,6 +66,22 @@ export class TaskService {
     }
   }
 
+  updateTaskNameAndDescription(taskId: string, taskCurrentStatus: TaskStatus, newTaskName: string, newTaskDescription: string) {
+    const currentTaskList = this.getTaskListByStatus(taskCurrentStatus);
+    const currentTaskIndex = currentTaskList.value.findIndex((task) => task.id === taskId);
+
+    if (currentTaskIndex !== -1) {
+      const updatedTask = {
+        ...currentTaskList.value[currentTaskIndex],
+        name: newTaskName,
+        description: newTaskDescription,
+      };
+      const updatedTaskList = [...currentTaskList.value];
+      updatedTaskList[currentTaskIndex] = updatedTask;
+      currentTaskList.next(updatedTaskList);
+    }
+  }
+
   private getTaskListByStatus(taskStatus: TaskStatus) {
     const taskListObj = {
       [TaskStatusEnum.TODO]: this.todoTasks$,
